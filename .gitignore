@@ -1,0 +1,4 @@
+*.pyc
+settings/local.py
+/static/
+/media/

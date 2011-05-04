@@ -2,3 +2,4 @@
 settings/local.py
 /static/
 /media/
+/test.db

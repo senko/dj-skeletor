@@ -3,12 +3,7 @@
 # symlink settings/local.py to it. Do not store the symlink in the git repo.
 
 from .base import *
-
-try:
-    from .local import *
-except ImportError:
-    pass
-
+from .local import *
 
 TEMPLATE_DEBUG = DEBUG
 

@@ -22,3 +22,6 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda *args, **kwargs: True
 }
 
+# Sentry - use even in debug mode
+
+SENTRY_TESTING = True

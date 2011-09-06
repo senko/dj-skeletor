@@ -25,3 +25,8 @@ DEBUG_TOOLBAR_CONFIG = {
 # Sentry - use even in debug mode
 
 SENTRY_TESTING = True
+
+# make Sentry sensitive to DEBUG output
+for app, cfg in LOGGING['loggers'].items():
+    if 'sentry' in cfg['handlers']:
+        cfg['level'] = 'DEBUG'

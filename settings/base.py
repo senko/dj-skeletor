@@ -156,9 +156,13 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False
         },
-        PROJECT_NAME: {
-            'level': 'DEBUG',
-            'handlers': ['sentry']
-        },
     }
 }
+
+# set up Sentry logging for every app internal to the project
+for app in INSTALLED_APPS:
+    if os.path.isdir(os.path.join(ROOT_DIR, app)):
+        LOGGING['loggers'][app] = {
+            'level': 'WARNING',
+            'handlers': ['sentry']
+        }

@@ -26,8 +26,10 @@ production settings.
     cd settings
     ln -s dev.py local.py
     cd ..
+
+    # initialize the database
     python manage.py syncdb
-    python manage.py migrate sentry
+    python manage.py migrate
 
     # run it!
     python manage.py runserver
@@ -40,11 +42,14 @@ Settings are handled in the *settings* module:
   * settings.base - base/invariant project settings
   * settings.dev - development/test environment
   * settings.prod - production environment
-  * settings.local - a symlink to current environment settings
+  * settings.local - local environment
 
-To activate the specific environment, symlink settings/local.py (not
-in the repository for obvious reasons) to either prod or dev (or some
-other, if you need more different enviroments) settings module.
+If you're storing your environment settings in the repository, the easiest
+way to activate it on the server is to symlink settings/local.py to either
+prod or dev settings module.
+
+If you like to keep the local settings out of the git repository, use dev.py
+or prod.py as a template and create your local.py as needed.
 
 ### Django Debug Toolbar
 
@@ -63,4 +68,4 @@ schema migrations.
 Sentry is used in the integrated setup, ie. as an app inside the Django
 project. This makes things simpler when starting. When the project grows,
 or if you have several apps you need to monitor, consider switching to
-running Sentry in Client/Server mode.
+running Sentry in client/server mode.

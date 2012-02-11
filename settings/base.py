@@ -87,6 +87,8 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'raven.contrib.django.middleware.SentryResponseErrorIdMiddleware',
+    'raven.contrib.django.middleware.SentryLogMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -115,7 +117,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'south',
     'sentry',
-    'sentry.client',
+    'raven.contrib.django',
 )
 
 # Use Sentry for loging exceptions and catching logging.* calls
@@ -124,18 +126,24 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
+    'root': {
+        'level': 'WARNING',
+        'handlers': ['sentry']
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        }
+    },
     'handlers': {
-        'null': {
+        'sentry': {
             'level': 'DEBUG',
-            'class': 'django.utils.log.NullHandler'
+            'class': 'raven.contrib.django.handlers.SentryHandler'
         },
         'console': {
             'level': 'DEBUG',
-            'class': 'logging.StreamHandler'
-        },
-        'sentry': {
-            'level': 'DEBUG',
-            'class': 'sentry.client.handlers.SentryHandler'
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
         },
         'mail_admins': {
             'level': 'ERROR',
@@ -143,28 +151,26 @@ LOGGING = {
         }
     },
     'loggers': {
-        'django': {
-            'handlers': ['null'],
-            'level': 'INFO',
-            'propagate': True
+        'django.db.backends': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False
+        },
+        'raven': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False
+        },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False
         },
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
-            'propagate': True,
-        },
-        'sentry.errors': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False
-        },
+            'propagate': True
+        }
     }
 }
 
-# set up Sentry logging for every app internal to the project
-for app in INSTALLED_APPS:
-    if os.path.isdir(os.path.join(ROOT_DIR, app)):
-        LOGGING['loggers'][app] = {
-            'level': 'WARNING',
-            'handlers': ['sentry']
-        }

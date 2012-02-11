@@ -10,15 +10,17 @@ production settings.
 
 ### Quick setup
 
-    # prepare the environment
+    # prepare the virtual environment
     virtualenv --no-site-packages myenv
     cd myenv
     source bin/activate
-    pip install django django-debug-toolbar south django-sentry
 
     # get the skeleton project
     git clone https://github.com/senko/dj-skeletor.git myproject
     cd myproject
+
+    # install requirements
+    pip install -r requirements.txt
 
     # activate dev environment
     cd settings

@@ -31,6 +31,9 @@ production settings.
     python manage.py syncdb
     python manage.py migrate
 
+    # collect the static files needed by the apps
+    python manage.py collectstatic
+
     # run it!
     python manage.py runserver
 

@@ -131,7 +131,7 @@ def setup(origin):
     git_tag_now('initial-deploy')
     with prefix('source ~/.bash_profile 2>/dev/null || ' +
             'source ~/.profile 2>/dev/null || true'):
-    run('mkvirtualenv --no-site-packages ' + env.virtualenv)
+        run('mkvirtualenv --no-site-packages ' + env.virtualenv)
     project_name = _discover_project_name()
     if project_name:
         fname = project_name + '/settings/local.py'

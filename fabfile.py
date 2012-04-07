@@ -118,7 +118,6 @@ def update():
     collectstatic()
     syncdb()
     migrate()
-    test()
 
 def setup(origin):
     """Create an initial deployment from the source git repository.
@@ -141,6 +140,7 @@ def setup(origin):
                     'fname': fname
                 })
     update()
+    test()
 
 def deploy():
     """Deploy a new version of the app from the tracked git branch."""
@@ -149,6 +149,7 @@ def deploy():
     git_pull()
     git_tag_now('deploy')
     update()
+    test()
 
 def runserver(host='0.0.0.0', port='8000'):
     """Run a development server on host:port (default 0.0.0.0:8000)"""

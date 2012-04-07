@@ -131,7 +131,7 @@ Useful commands:
   * update - combines collecstatic, syncdb, migrate
   * test - run manage.py test with the test settings enabled
 
-For all the commands, run <code>fab -l</code> or look at the source.
+For all the commands, run 'fab -l' or look at the source.
 
 #### Examples:
 

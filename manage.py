@@ -14,10 +14,7 @@ if __name__ == "__main__":
     settings_module = None
     for name in listdir(root):
         full_name = join(root, name)
-        if (exists(join(full_name, 'settings.py')) or
-            exists(join(full_name, 'settings.pyc')) or
-            exists(join(full_name, 'settings', '__init__.py')) or
-            exists(join(full_name, 'settings', '__init__.pyc'))):
+        if exists(join(full_name, 'settings', '__init__.py')):
                 settings_module = name + '.settings'
                 break
 

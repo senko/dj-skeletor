@@ -118,9 +118,12 @@ INSTALLED_APPS = (
     # Uncomment to enable South for database migrations:
     'south',
 
-    # Uncomment to enable exception logging using Sentry
+    # Uncomment to enable exception logging using Sentry; you also need
+    # to set SENTRY_DSN below
     'raven.contrib.django',
 )
+
+SENTRY_DSN = 'http://public:secret@localhost:9000/1'
 
 # Standard Django logging config
 BASE_LOGGING = {
@@ -199,14 +202,13 @@ SENTRY_LOGGING = {
     }
 }
 
-if 'raven.contrib.django' in INSTALLED_APPS:
+if 'raven.contrib.django' in INSTALLED_APPS and SENTRY_DSN:
     MIDDLEWARE_CLASSES = (
         'raven.contrib.django.middleware.SentryResponseErrorIdMiddleware',
         'raven.contrib.django.middleware.SentryLogMiddleware',
     ) + MIDDLEWARE_CLASSES
 
     # Point this to your Sentry server
-    SENTRY_DSN = 'http://public:secret@localhost:9000/1'
     LOGGING = SENTRY_LOGGING
 else:
     # Use default Django logging setup

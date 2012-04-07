@@ -1,5 +1,4 @@
 *.pyc
-settings/local.py
-/static/
-/media/
-/test.db
+/*/settings/local.py
+/*/static/
+/*/media/

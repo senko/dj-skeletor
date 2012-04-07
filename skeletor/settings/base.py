@@ -77,7 +77,8 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ''
 if not SECRET_KEY:
-    raise Exception('Please set SECRET_KEY in ' + __file__)
+    from logging import warn
+    warn('Please set a unique SECRET_KEY in ' + __file__)
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

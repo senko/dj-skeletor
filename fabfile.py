@@ -49,7 +49,7 @@ def rsync():
     assert hasattr(env, 'project_path')
     local_dir = os.path.dirname(__file__) + '/'
     rsync_project(remote_dir=env.project_path, local_dir=local_dir,
-        exclude=['media/', 'static/', '*.pyc', '.git/'])
+        exclude=['media/', 'static/', '*.pyc', '.git/', 'dev.db'])
 
 def manage(cmd):
     """Run Django management command on the server"""

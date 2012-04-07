@@ -1,14 +1,25 @@
 #!/usr/bin/env python
-from django.core.management import execute_manager
-import imp
-try:
-    imp.find_module('settings') # Assumed to be in the same directory.
-except ImportError:
-    import sys
-    sys.stderr.write("Error: Can't find the file 'settings.py' in the directory containing %r. It appears you've customized things.\nYou'll have to run django-admin.py, passing it your settings module.\n" % __file__)
-    sys.exit(1)
-
-import settings
+from os import environ, listdir
+from os.path import join, dirname, abspath, exists
+import sys
 
 if __name__ == "__main__":
-    execute_manager(settings)
+
+    # Try to discover project name and set the default settings module
+    # based on it. If discovery fails, DJANGO_SETTINGS_MODULE environment
+    # variable must be set.
+
+    root = dirname(abspath(__file__))
+    sys.path.append(root)
+    settings_module = None
+    for name in listdir(root):
+        full_name = join(root, name)
+        if exists(join(full_name, 'settings', '__init__.py')):
+                settings_module = name + '.settings'
+                break
+
+    if settings_module is not None:
+        environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
+
+    from django.core.management import execute_from_command_line
+    execute_from_command_line(sys.argv)

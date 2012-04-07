@@ -77,7 +77,8 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = ''
 if not SECRET_KEY:
-    raise Exception('Please set SECRET_KEY in ' + __file__)
+    from logging import warn
+    warn('Please set a unique SECRET_KEY in ' + __file__)
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -87,8 +88,6 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'raven.contrib.django.middleware.SentryResponseErrorIdMiddleware',
-    'raven.contrib.django.middleware.SentryLogMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -115,15 +114,44 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+
+    # Uncomment to enable South for database migrations:
     'south',
-    'sentry',
+
+    # Uncomment to enable exception logging using Sentry; you also need
+    # to set SENTRY_DSN below
     'raven.contrib.django',
 )
 
-# Use Sentry for loging exceptions and catching logging.* calls
-# (eg. debug logs). If there's a crash while in production, still
-# send the mail to the admins.
-LOGGING = {
+SENTRY_DSN = 'http://public:secret@localhost:9000/1'
+
+# Standard Django logging config
+BASE_LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
+
+# Logging config to use if Sentry client is used
+SENTRY_LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'root': {
@@ -174,3 +202,14 @@ LOGGING = {
     }
 }
 
+if 'raven.contrib.django' in INSTALLED_APPS and SENTRY_DSN:
+    MIDDLEWARE_CLASSES = (
+        'raven.contrib.django.middleware.SentryResponseErrorIdMiddleware',
+        'raven.contrib.django.middleware.SentryLogMiddleware',
+    ) + MIDDLEWARE_CLASSES
+
+    # Point this to your Sentry server
+    LOGGING = SENTRY_LOGGING
+else:
+    # Use default Django logging setup
+    LOGGING = BASE_LOGGING

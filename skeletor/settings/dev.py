@@ -9,6 +9,8 @@ DATABASES = {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # set up Django Debug Toolbar if installed
 try:
     import debug_toolbar

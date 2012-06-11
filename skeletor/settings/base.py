@@ -123,7 +123,9 @@ INSTALLED_APPS = (
     'raven.contrib.django',
 )
 
-SENTRY_DSN = 'http://public:secret@localhost:9000/1'
+# Get the SENTRY_DSN from your project settings page in Sentry (either self
+# hosted or on getsentry.com).
+SENTRY_DSN = ''
 
 # Standard Django logging config
 BASE_LOGGING = {

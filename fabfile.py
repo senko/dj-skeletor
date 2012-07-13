@@ -23,7 +23,7 @@ def _discover_project_name():
     project_name = None
     local_root = dirname(__file__)
     for subdir in listdir(local_root):
-        if exists(join(local_root, subdir, 'settings', 'test.py')):
+        if exists(join(local_root, subdir, 'settings', 'base.py')):
             project_name = subdir
             break
     return project_name

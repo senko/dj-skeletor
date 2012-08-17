@@ -1,5 +1,6 @@
 *.pyc
 /*/settings/local.py
+/*/settings/secret.py
 /*/static/
 /*/media/
 /dev.db

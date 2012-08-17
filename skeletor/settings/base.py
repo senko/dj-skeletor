@@ -74,19 +74,24 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Import the SECRET_KEY from secret.py
-try:
-    from secret import *
-except ImportError:
-    # If the file doesn't exist, generate a random key
-    from django.utils.crypto import get_random_string
-    secret_chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
-    secret_str = get_random_string(50, secret_chars)
-
-    # Save the key setting to secret.py
+def ensure_secret_key_file():
+    """Checks that secret.py exists in settings dir. If not, creates one
+    with a random generated SECRET_KEY setting."""
     secret_path = os.path.join(ABS_PATH('settings'), 'secret.py')
-    with open(secret_path, 'w') as secret_file:
-        secret_file.write("SECRET_KEY = '" + secret_str + "'\n")
+    if not os.path.exists(secret_path):
+        secret_key = gen_secret_key()
+        with open(secret_path, 'w') as f:
+            f.write("SECRET_KEY = " + repr(secret_key) + "\n")
+
+def gen_secret_key(length=50):
+    """Generates a random secret key of given length."""
+    from django.utils.crypto import get_random_string
+    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+    return get_random_string(length, chars)
+
+# Import the secret key
+ensure_secret_key_file()
+from secret import SECRET_KEY
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

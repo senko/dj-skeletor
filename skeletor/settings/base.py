@@ -79,15 +79,10 @@ def ensure_secret_key_file():
     with a random generated SECRET_KEY setting."""
     secret_path = os.path.join(ABS_PATH('settings'), 'secret.py')
     if not os.path.exists(secret_path):
-        secret_key = gen_secret_key()
+        from django.utils.crypto import get_random_string
+        secret_key = get_random_string(50, 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
         with open(secret_path, 'w') as f:
             f.write("SECRET_KEY = " + repr(secret_key) + "\n")
-
-def gen_secret_key(length=50):
-    """Generates a random secret key of given length."""
-    from django.utils.crypto import get_random_string
-    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
-    return get_random_string(length, chars)
 
 # Import the secret key
 ensure_secret_key_file()

@@ -74,11 +74,19 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = ''
-if not SECRET_KEY:
-    from logging import warn
-    warn('Please set a unique SECRET_KEY in ' + __file__)
+def ensure_secret_key_file():
+    """Checks that secret.py exists in settings dir. If not, creates one
+    with a random generated SECRET_KEY setting."""
+    secret_path = os.path.join(ABS_PATH('settings'), 'secret.py')
+    if not os.path.exists(secret_path):
+        from django.utils.crypto import get_random_string
+        secret_key = get_random_string(50, 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
+        with open(secret_path, 'w') as f:
+            f.write("SECRET_KEY = " + repr(secret_key) + "\n")
+
+# Import the secret key
+ensure_secret_key_file()
+from secret import SECRET_KEY
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

@@ -5,6 +5,7 @@ import os.path
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 PROJECT_NAME = os.path.basename(ROOT_DIR)
 
+
 def ABS_PATH(*args):
     return os.path.join(ROOT_DIR, *args)
 
@@ -74,13 +75,15 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+
 def ensure_secret_key_file():
     """Checks that secret.py exists in settings dir. If not, creates one
     with a random generated SECRET_KEY setting."""
     secret_path = os.path.join(ABS_PATH('settings'), 'secret.py')
     if not os.path.exists(secret_path):
         from django.utils.crypto import get_random_string
-        secret_key = get_random_string(50, 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
+        secret_key = get_random_string(50,
+            'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
         with open(secret_path, 'w') as f:
             f.write("SECRET_KEY = " + repr(secret_key) + "\n")
 
@@ -106,8 +109,8 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = PROJECT_NAME + '.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
+    # Put strings here, like "/home/html/django_templates" or
+    # "C:/www/django/templates". Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     ABS_PATH('templates'),
 )

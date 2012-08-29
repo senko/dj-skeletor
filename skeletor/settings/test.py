@@ -16,8 +16,8 @@ SOUTH_TESTS_MIGRATE = False
 SKIP_SOUTH_TESTS = True
 
 # Disable Sentry if it was installed
-INSTALLED_APPS = [ app for app in INSTALLED_APPS
-    if not app.startswith('raven.') ]
-MIDDLEWARE_CLASSES = [ cls for cls in MIDDLEWARE_CLASSES
-    if not cls.startswith('raven.') ]
+INSTALLED_APPS = [app for app in INSTALLED_APPS
+    if not app.startswith('raven.')]
+MIDDLEWARE_CLASSES = [cls for cls in MIDDLEWARE_CLASSES
+    if not cls.startswith('raven.')]
 LOGGING = BASE_LOGGING

@@ -2,10 +2,15 @@ from .base import *
 
 DEBUG = TEMPLATE_DEBUG = False
 
+# Try to use DATABASE_URL environment variable if possible, otherwise fall back
+# to hardcoded values
 try:
     import dj_database_url
     DATABASES = {'default': dj_database_url.config()}
 except ImportError:
+    DATABASES = {}
+
+if not DATABASES:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.

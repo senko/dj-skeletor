@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = False
+DEBUG = TEMPLATE_DEBUG = False
 
 try:
     import dj_database_url

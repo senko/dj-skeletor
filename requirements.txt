@@ -3,3 +3,4 @@ Fabric==1.4.3
 South==0.7.6
 django-debug-toolbar==0.9.4
 raven==2.0.6
+devserver=0.4.0

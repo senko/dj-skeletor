@@ -33,3 +33,12 @@ try:
     }
 except ImportError:
     pass
+
+# set up devserver if installed
+try:
+    import devserver
+    INSTALLED_APPS += (
+        'devserver',
+    )
+except ImportError:
+    pass

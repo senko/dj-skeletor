@@ -11,6 +11,13 @@ DATABASES = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# Disable caching while in development
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
 # set up Django Debug Toolbar if installed
 try:
     import debug_toolbar

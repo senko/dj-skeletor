@@ -16,3 +16,11 @@ except ImportError:
             'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
         }
     }
+
+# Memcached is better choice, if you can set it up; if not, this is a good
+# alternative.
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}

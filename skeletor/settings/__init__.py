@@ -1,4 +1,8 @@
-# Create a separate local config for each of the environments the app will
-# run in. Store all the configs in git. To activate a particular configuration,
-# symlink settings/local.py to it. Do not store the symlink in the git repo.
-from .local import *
+# Try to activate local settings. If it fails, assume we're on production and
+# activate production settings. Note that local.py shouldn't be tracked in the
+# repository.
+
+try:
+    from .local import *
+except ImportError:
+    from .prod import *

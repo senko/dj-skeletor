@@ -28,3 +28,12 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
+
+try:
+    import django_nose
+    INSTALLED_APPS += (
+        'django_nose',
+    )
+    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+except ImportError:
+    pass

@@ -21,3 +21,10 @@ INSTALLED_APPS = [app for app in INSTALLED_APPS
 MIDDLEWARE_CLASSES = [cls for cls in MIDDLEWARE_CLASSES
     if not cls.startswith('raven.')]
 LOGGING = BASE_LOGGING
+
+# Disable cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}

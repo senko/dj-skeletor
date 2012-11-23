@@ -29,3 +29,12 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
+
+# Enable gunicorn if it's installed
+try:
+    import gunicorn
+    INSTALLED_APPS += (
+        'gunicorn',
+    )
+except ImportError:
+    pass

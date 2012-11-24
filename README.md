@@ -18,6 +18,10 @@ Comes with:
   * Fabric for easy deployment to remote servers
   * Test-specific settings for running test with an in-memory SQLite database
   * SQLite database configured in the default development settings
+  * Gunicorn integration for production
+  * Devserver integration for development
+  * Nosetests and coverage integration for testing
+  * Database auto-discovery via environment settings, compatible with Heroku
 
 DJ Skeletor requires Django 1.4 or later. All the other requirements are
 optional and can be disabled.
@@ -33,9 +37,14 @@ optional and can be disabled.
     cd myproject
 
     # install requirements
-    pip install -r requirements.txt
+    make requirements
+
+    # sanity test
+    make test
 
     # rename the project directory to reflect your project name
+    # don't forget to edit Makefile to reflect the correct project name
+    # in settings
     git mv skeletor myproject && git commit -m 'renamed project'
 
     # activate dev environment
@@ -90,6 +99,10 @@ is used for schema migrations.
 The database filename used is 'dev.db' in the project root directory. It is
 explicitly ignored by git and fabric when rsyncing the local directory to server.
 
+In production, database settings autodiscovery is attempted using the
+dj_database_url module, by looking at the DATABASE_URL environment setting.
+This is the standard for Heroku deployments. If the autodiscovery fails,
+the entry falls back to hardcoded values in prod.py or (if it exists) local.py.
 
 ### Sentry / Raven
 

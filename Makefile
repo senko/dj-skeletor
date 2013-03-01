@@ -1,7 +1,7 @@
 MANAGE=python manage.py
 SETTINGS=--settings=skeletor.settings.test
 
-.PHONY: all test coverage clean requirements
+.PHONY: all test coverage clean requirements update
 
 all: coverage
 
@@ -23,3 +23,11 @@ requirements:
 	else \
 		pip install -r requirements.txt; \
 	fi
+
+update:
+	$(MAKE) requirements
+	$(MAKE) clean
+	$(MANAGE) migrate
+	$(MANAGE) collectstatic --noinput
+	# Uncomment if you're using COMPRESSOR_OFFLINE setting
+	# $(MANAGE) compress

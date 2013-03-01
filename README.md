@@ -159,6 +159,31 @@ Continuous Integration systems, such as Jenkins). The test run also produces
 `nosetests.xml` file in the standard JUnit format, also useful for integration
 with Jenkins or other CI systems.
 
+### Makefile
+
+A Makefile is provided with common tasks for updating requirements, running
+tests or updating the deployment.
+
+The available Makefile targets are:
+
+  * make test - run tests
+  * make coverage - run tests with coverage reports
+  * make clean - remove *.pyc files and test coverage artifacts
+  * make requirements - install/update requirements via pip
+  * make update - update requirements, clean files, run any migrations needed,
+      collect static files, and optionally compress static files
+
+#### Deployments via git
+
+If deployments are done via git (and not fabric, see below), it's
+recommended to create another Makefile target that will do the deploy, for
+example:
+
+    deploy:
+      git pull
+      $(MAKE) update
+      # command to restart the service(s) as neccessary
+
 ### Fabric
 
 A fabfile is provided with common tasks for rsyncing local directory to

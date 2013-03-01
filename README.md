@@ -23,7 +23,7 @@ Comes with:
   * Nosetests and coverage integration for testing
   * Database auto-discovery via environment settings, compatible with Heroku
 
-DJ Skeletor requires Django 1.4 or later. All the other requirements are
+DJ Skeletor requires Django 1.5 or later. All the other requirements are
 optional and can be disabled.
 
 

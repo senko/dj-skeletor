@@ -1,11 +1,11 @@
-Django==1.4.2
-Fabric==1.4.3
+Django==1.5
+Fabric==1.5.3
 South==0.7.6
 django-debug-toolbar==0.9.4
-raven==2.0.6
-django-devserver==0.4.0
+raven==3.1.16
+-e git://github.com/dcramer/django-devserver.git#egg=django-devserver-dev
 dj-database-url==0.2.1
-gunicorn==0.14.6
+gunicorn==0.17.2
 django-nose==1.1
-coverage==3.5.3
+coverage==3.6
 nose==1.2.1

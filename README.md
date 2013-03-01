@@ -21,6 +21,7 @@ Comes with:
   * Gunicorn integration for production
   * Devserver integration for development
   * Nosetests and coverage integration for testing
+  * Django Compressor for CSS/JS asset minification and combining
   * Database auto-discovery via environment settings, compatible with Heroku
 
 DJ Skeletor requires Django 1.5 or later. All the other requirements are
@@ -123,6 +124,24 @@ version at http://getsentry.com/.
 When you connect to your (or hosted) Sentry server and create a new project
 there, you'll be given Sentry DSN which you need to put into settings/base.py
 to activate Sentry logging.
+
+### Compressor
+
+Django Compressor can minify and compile your CSS and JS assets. DJ Skeletor
+comes with Compressor support, but to make use of it, you need to use
+`{% compress %}` tags in your templates.
+
+By default Compressor runs in online mode, and files are compressed
+and cached (if needed) when the template that uses them is first served.
+Optionally, it can also use offline mode (COMPRESSOR_OFFLINE) in which
+the static files are pre-compressed in deployment phase. To activate this,
+you'll need to activate the `COMPRESSOR_OFFLINE` setting (it's commented
+out in `settings/prod.py` by default) and update `Makefile` to run the
+compressor in the deployment phase.
+
+Note that if you enable offline mode, you will need to run compress after
+every template or static file change, so it's recommended to only use it
+for deployed/production environments.
 
 ### Test code coverage
 

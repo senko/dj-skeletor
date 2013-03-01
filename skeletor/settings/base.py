@@ -77,6 +77,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 
@@ -136,6 +137,9 @@ INSTALLED_APPS = (
     # Uncomment to enable exception logging using Sentry; you also need
     # to set SENTRY_DSN below
     'raven.contrib.django',
+
+    # Uncomment to enable Django Compressor for minifying/combining JS/CSS
+    'compressor'
 )
 
 # Get the SENTRY_DSN from your project settings page in Sentry (either self

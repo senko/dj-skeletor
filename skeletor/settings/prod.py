@@ -1,6 +1,10 @@
 from .base import *
 
 DEBUG = TEMPLATE_DEBUG = False
+COMPRESS_ENABLED = True
+
+# Uncomment to precompress files during deployment (also update Makefile)
+# COMPRESS_OFFLINE = True
 
 # Try to use DATABASE_URL environment variable if possible, otherwise fall back
 # to hardcoded values

@@ -97,13 +97,15 @@ A simple sqlite3 database is configured in the development settings, so
 no additional configuration is needed to start hacking right away. South
 is used for schema migrations.
 
-The database filename used is 'dev.db' in the project root directory. It is
-explicitly ignored by git and fabric when rsyncing the local directory to server.
+The database filename used is `dev.db` in the project root directory. It is
+explicitly ignored by git and fabric when rsyncing the local directory to
+server.
 
 In production, database settings autodiscovery is attempted using the
-dj_database_url module, by looking at the DATABASE_URL environment setting.
+`dj_database_url` module, by looking at the `DATABASE_URL` environment setting.
 This is the standard for Heroku deployments. If the autodiscovery fails,
-the entry falls back to hardcoded values in prod.py or (if it exists) local.py.
+the entry falls back to hardcoded values in `prod.py` or (if it exists)
+`local.py`.
 
 ### Sentry / Raven
 

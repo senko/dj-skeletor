@@ -31,9 +31,14 @@ CACHES = {
 
 try:
     import django_nose
+    import os.path
     INSTALLED_APPS += (
         'django_nose',
     )
     TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+    PROJECT_APPS = [app for app in INSTALLED_APPS
+            if os.path.exists(os.path.join(ROOT_DIR, '..', app))]
+    if PROJECT_APPS:
+        NOSE_ARGS=['--cover-package=' + ','.join(PROJECT_APPS)]
 except ImportError:
     pass

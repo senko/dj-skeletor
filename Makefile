@@ -10,10 +10,10 @@ test:
 
 coverage:
 	$(MANAGE) test --where=. $(SETTINGS) \
-		--with-coverage --with-xunit --cover-html  --cover-erase
+		--with-xcoverage --with-xunit --cover-html  --cover-erase
 
 clean:
-	rm -rf .coverage cover nosetests.xml
+	rm -rf .coverage cover nosetests.xml coverage.xml
 	find . -name '*.pyc' -exec rm '{}' ';'
 
 requirements:

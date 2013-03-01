@@ -124,6 +124,20 @@ When you connect to your (or hosted) Sentry server and create a new project
 there, you'll be given Sentry DSN which you need to put into settings/base.py
 to activate Sentry logging.
 
+### Test code coverage
+
+DJ Skeletor comes with support for nose test runner and code coverage
+reporting through coverage.py.
+
+To run a normal test without code coverage report, run `make test`.
+
+To run a test with a coverage report, run `make coverage`. The report
+is generated in HTML format in the `cover/` subdirectory, and in the
+Cobertura format in `coverage.xml` file (useful for integrating with
+Continuous Integration systems, such as Jenkins). The test run also produces
+`nosetests.xml` file in the standard JUnit format, also useful for integration
+with Jenkins or other CI systems.
+
 ### Fabric
 
 A fabfile is provided with common tasks for rsyncing local directory to

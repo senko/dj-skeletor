@@ -1,2 +1,2 @@
 -r test.txt
-django-debug-toolbar
+django-debug-toolbar==0.9.4

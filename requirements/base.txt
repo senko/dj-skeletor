@@ -1,0 +1,4 @@
+Django
+Fabric
+South
+dj-database-url

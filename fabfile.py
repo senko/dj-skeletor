@@ -152,9 +152,8 @@ def setup(origin):
     if project_name:
         fname = project_name + '/settings/local.py'
         with _cd_project_root():
-            run('test -f %(fname)s || echo "from .dev import *" > %(fname)s' % {
-                    'fname': fname
-                })
+            run('test -f %(fname)s || echo "from .dev import *" > %(fname)s' %
+                {'fname': fname})
     update()
     test()
 

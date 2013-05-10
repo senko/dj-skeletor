@@ -27,7 +27,7 @@ LOGGING['loggers']['django.db'] = {
 
 # set up Django Debug Toolbar if installed
 try:
-    import debug_toolbar
+    import debug_toolbar  # noqa
     MIDDLEWARE_CLASSES += (
         'debug_toolbar.middleware.DebugToolbarMiddleware',
     )
@@ -44,7 +44,7 @@ except ImportError:
 
 # Set up django-extensions if installed
 try:
-    import django_extensions
+    import django_extensions  # noqa
     INSTALLED_APPS += ('django_extensions',)
 except ImportError:
     pass

@@ -23,7 +23,7 @@ CACHES = {
 }
 
 try:
-    import django_nose
+    import django_nose  # noqa
     import os.path
     INSTALLED_APPS += (
         'django_nose',
@@ -32,6 +32,6 @@ try:
     PROJECT_APPS = [app for app in INSTALLED_APPS
             if os.path.exists(os.path.join(ROOT_DIR, '..', app))]
     if PROJECT_APPS:
-        NOSE_ARGS=['--cover-package=' + ','.join(PROJECT_APPS)]
+        NOSE_ARGS = ['--cover-package=' + ','.join(PROJECT_APPS)]
 except ImportError:
     pass

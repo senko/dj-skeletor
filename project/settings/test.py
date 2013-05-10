@@ -1,5 +1,5 @@
-# Settings file optimized for test running. Sets up in-memory database
-# and disables South and Sentry for the tests
+# Settings file optimized for test running. Sets up in-memory database,
+# Nose test runner and disables South for the tests
 
 from .base import *
 

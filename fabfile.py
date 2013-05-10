@@ -31,8 +31,6 @@ def _discover_project_name():
             break
     return project_name
 
-# Settings
-
 
 def env(venv):
     """Virtual environment to use on the server"""

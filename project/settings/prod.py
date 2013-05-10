@@ -14,7 +14,7 @@ try:
 except ImportError:
     DATABASES = {}
 
-if not DATABASES or not DATABASES.get('default'):
+if not DATABASES or 'default' not in DATABASES:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.

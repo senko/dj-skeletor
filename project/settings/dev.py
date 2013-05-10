@@ -18,6 +18,13 @@ CACHES = {
     }
 }
 
+# Add SQL statement logging in development
+LOGGING['loggers']['django.db'] = {
+    'handlers': ['console'],
+    'level': 'DEBUG',
+    'propagate': False
+}
+
 # set up Django Debug Toolbar if installed
 try:
     import debug_toolbar

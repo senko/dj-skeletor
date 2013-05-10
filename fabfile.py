@@ -88,11 +88,11 @@ def git_tag_now(prefix):
 # High-level commands
 
 
-def install_requirements():
-    """Install required Python packages (from requirements.txt)"""
+def install_requirements(env='prod'):
+    """Install required Python packages (from requirements/<env>.txt)"""
     with _activate():
         with _cd_project_root():
-            run('pip install -r requirements.txt')
+            run('pip install -r %s/requirements.txt' % env)
 
 
 def collectstatic():

@@ -41,14 +41,10 @@ try:
 except ImportError:
     pass
 
-# set up devserver if installed
+
+# Set up django-extensions if installed
 try:
-    import devserver
-    INSTALLED_APPS += (
-        'devserver',
-    )
+    import django_extensions
+    INSTALLED_APPS += ('django_extensions',)
 except ImportError:
     pass
-
-# Don't use Sentry logging even if configured for production
-LOGGING = BASE_LOGGING

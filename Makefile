@@ -38,16 +38,22 @@ reqs/test: ensure_virtualenv
 reqs/prod: ensure_virtualenv
 	pip install -r requirements/prod.txt
 
-dev-setup: ensure_virtualenv
-	$(MAKE) reqs/dev
+dev-setup: ensure_virtualenv reqs/dev
 	if [ ! -f project/settings/local.py ]; then \
 		echo 'from .dev import *' > project/settings/local.py; \
 	fi
 	$(MANAGE) syncdb --all
 	$(MANAGE) migrate --fake
 
+test-setup: ensure_virtualenv reqs/test
+
+dev-update: ensure_virtualenv reqs/dev
+	$(MAKE) update
+
+prod-update: ensure_virtualenv reqs/prod
+	$(MAKE) update
+
 update: ensure_virtualenv
-	$(MAKE) reqs/prod
 	$(MAKE) clean
 	$(MANAGE) syncdb
 	$(MANAGE) migrate

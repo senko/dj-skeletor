@@ -39,10 +39,10 @@ try:
     import raven.contrib.django.raven_compat  # noqa
     INSTALLED_APPS += ('raven.contrib.django.raven_compat',)
 
-# Raven will try to use SENTRY_DSN from environment if possible (eg. on
-# Heroku). If you need to set it manually, uncomment and set SENTRY_DSN
-# setting here.
-# SENTRY_DSN = ''
+    # Raven will try to use SENTRY_DSN from environment if possible (eg. on
+    # Heroku). If you need to set it manually, uncomment and set SENTRY_DSN
+    # setting here.
+    # SENTRY_DSN = ''
 except ImportError:
     pass
 

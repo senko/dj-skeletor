@@ -1,6 +1,8 @@
 MANAGE=python manage.py
 SETTINGS=--settings=project.settings.test
 
+FLAKE8_OPTS=--exclude=.git,migrations --max-complexity=10
+
 .PHONY: all test coverage clean requirements update \
 	ensure_virtualenv reqs/dev reqs/test reqs/prod dev-setup
 
@@ -17,6 +19,9 @@ clean:
 	rm -rf .coverage cover nosetests.xml coverage.xml
 	rm -rf skeletor/static/CACHE
 	find . -name '*.pyc' -exec rm '{}' ';'
+
+lint:
+	flake8 $(FLAKE8_OPTS) .
 
 ensure_virtualenv:
 	@if [ -z $$VIRTUAL_ENV ]; then \

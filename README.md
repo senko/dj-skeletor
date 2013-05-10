@@ -27,28 +27,36 @@ of useful Django application and setup for development, production and
 
 The development environment by default includes:
 
-* South for database migrations (both development and production use it)
-* Django Debug Toolbar for displaying extra information about view execution
+* [South](http://south.readthedocs.org/en/latest/about.html)
+  for database migrations (both development and production use it)
+* [Django Debug Toolbar](https://github.com/django-debug-toolbar/django-debug-toolbar)
+  for displaying extra information about view execution
 * SQLite database (`dev.db` in the project root directory)
 * Integrated view debugger making it easy to debug crashes directly from the
-  browser (Werkzeug and django-extension's runserver_plus)
+  browser (Werkzeug and django-extension's
+  [runserver_plus](http://pythonhosted.org/django-extensions/runserver_plus.html))
 * Full SQL statement logging
-* Beefed-up Django shell with model auto-loading and IPython REPL
-* Flake8 source code checker (style, passive code analysis)
+* Beefed-up Django shell with model auto-loading and
+  [IPython](http://ipython.org/) REPL
+* [Flake8](https://pypi.python.org/pypi/flake8) source code checker
+  (style, passive code analysis)
 * Console E-mail backend set by default in dev for simple E-mail send testing
-* Automated testing all set-up with nose, optionally creating test coverage
-  reports, and using the in-memory SQLite database (and disabled South)
-  to speed up test execution
+* Automated testing all set-up with
+  [nose](https://nose.readthedocs.org/en/latest/), optionally creating test
+  coverage reports, and using the in-memory SQLite database (and disabled
+  South) to speed up test execution
 * Disabled cache for easier debugging
 
 The production environment by default includes:
 
 * South for database migrations (both development and production use it)
-* Gunicorn integration
-* Django Compressor for CSS/JS asset minification and compilation
+* [Gunicorn](http://gunicorn.org/) integration
+* [Django Compressor](http://django_compressor.readthedocs.org/en/master/)
+  for CSS/JS asset minification and compilation
 * Database auto-discovery via environment settings, compatible with Heroku
-* Sentry client (raven\_compat) for exception logging (used only if
-  `SENTRY_DSN` variable is set in settings or environment)
+* [Sentry](http://sentry.readthedocs.org/en/latest/) client (raven\_compat)
+  for exception logging (used only if `SENTRY_DSN` variable is set in
+  settings or environment)
 * Local-memory cache (although memcached is strongly recommended if available)
 
 ### The extended tour

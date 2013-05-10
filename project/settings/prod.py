@@ -54,3 +54,10 @@ try:
     )
 except ImportError:
     pass
+
+# Enable django-compressor if it's installed
+try:
+    import compressor
+    INSTALLED_APPS += ('compressor',)
+except ImportError:
+    pass

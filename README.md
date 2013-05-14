@@ -287,3 +287,16 @@ fabfile.py and commit the changes to your repository, or you can create
 local_fabfile.py, which will be loaded if it exists. The latter can be useful
 if you have per-team-member fabric customizations you don't want to commit
 to the repository.
+
+### Renaming the project
+
+By default, DJ Skeletor names the project *project*, so it's generic enough
+to not requiring the change for each project, so the initial setup is
+a bit faster (and the `manage.py` logic is simpler).
+
+If you do want to change the project name though, there's couple of things
+you need to do. For example, if you want to rename the project to *foo*:
+
+* rename the folder: `git mv project foo`
+* update `Makefile`, `manage.py` and˛`fabfile` to set `PROJECT_NAME` to `foo`
+* commit the changes to your git repository and you're done!

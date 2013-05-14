@@ -4,6 +4,9 @@ import os.path
 from fabric.api import *
 from fabric.contrib.project import rsync_project
 
+# if you rename the project directory, update this
+PROJECT_NAME = 'project'
+
 
 def _cd_project_root():
     assert hasattr(env, 'project_path')
@@ -18,18 +21,6 @@ def _activate():
         return prefix('source ~/.bash_profile 2>/dev/null || ' +
             'source ~/.profile 2>/dev/null || true &&' +
             'workon ' + env.virtualenv)
-
-
-def _discover_project_name():
-    from os import listdir
-    from os.path import join, dirname, exists
-    project_name = None
-    local_root = dirname(__file__)
-    for subdir in listdir(local_root):
-        if exists(join(local_root, subdir, 'settings', 'base.py')):
-            project_name = subdir
-            break
-    return project_name
 
 
 def env(venv):
@@ -113,7 +104,7 @@ def migrate():
 def test():
     """Run Django tests"""
     assert hasattr(env, 'project_path')
-    project_name = _discover_project_name()
+    project_name = 'project'
     if project_name:
         manage('test --settings=%s.settings.test' % project_name)
     else:
@@ -148,7 +139,7 @@ def setup(origin):
     with prefix('source ~/.bash_profile 2>/dev/null || ' +
             'source ~/.profile 2>/dev/null || true'):
         run('mkvirtualenv --no-site-packages ' + env.virtualenv)
-    project_name = _discover_project_name()
+    project_name = 'project'
     if project_name:
         fname = project_name + '/settings/local.py'
         with _cd_project_root():

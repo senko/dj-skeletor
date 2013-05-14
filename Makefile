@@ -1,5 +1,6 @@
 MANAGE=python manage.py
-SETTINGS=--settings=project.settings.test
+PROJECT_NAME=project
+SETTINGS=--settings=$(PROJECT_NAME).settings.test
 
 FLAKE8_OPTS=--exclude=.git,migrations --max-complexity=10
 
@@ -17,7 +18,7 @@ coverage:
 
 clean:
 	rm -rf .coverage cover nosetests.xml coverage.xml
-	rm -rf project/static/CACHE
+	rm -rf $(PROJECT_NAME)/static/CACHE
 	find . -name '*.pyc' -exec rm '{}' ';'
 
 lint:
@@ -39,8 +40,8 @@ reqs/prod: ensure_virtualenv
 	pip install -r requirements/prod.txt
 
 dev-setup: ensure_virtualenv reqs/dev
-	if [ ! -f project/settings/local.py ]; then \
-		echo 'from .dev import *' > project/settings/local.py; \
+	if [ ! -f $(PROJECT_NAME)/settings/local.py ]; then \
+		echo 'from .dev import *' > $(PROJECT_NAME)/settings/local.py; \
 	fi
 	$(MANAGE) syncdb --all
 	$(MANAGE) migrate --fake

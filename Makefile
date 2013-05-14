@@ -17,7 +17,7 @@ coverage:
 
 clean:
 	rm -rf .coverage cover nosetests.xml coverage.xml
-	rm -rf skeletor/static/CACHE
+	rm -rf project/static/CACHE
 	find . -name '*.pyc' -exec rm '{}' ';'
 
 lint:

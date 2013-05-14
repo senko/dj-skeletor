@@ -5,8 +5,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'skeletor.views.home', name='home'),
-    # url(r'^skeletor/', include('skeletor.foo.urls')),
+    # url(r'^$', 'myapp.views.home', name='home'),
+    # url(r'^myapp/', include('myapp.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

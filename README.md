@@ -1,34 +1,14 @@
-## DJ Skeletor
+# DJ Skeletor
 
-DJ Skeletor is a skeleton Django project handy for bootstrapping new
-empty projects.
+DJ Skeletor is a skeleton Django project handy for quick bootstrapping of new
+empty Django projects. It will help you get up and running with your project
+in seconds.
 
-The repository contains an empty, relocatable Django project with South,
-Django Debug Toolbar and Raven apps set, and with provisions for development,
-test and production settings.
+The repository contains an empty, relocatable Django project with a selection
+of useful Django application and setup for development, production and
+(automated) test settings and environments.
 
-
-### Features
-
-Comes with:
-
-  * South for database migrations
-  * Django Debug Toolbar for displaying extra information about your view excution
-  * Sentry client for logging exceptions (and custom logging)
-  * Fabric for easy deployment to remote servers
-  * Test-specific settings for running test with an in-memory SQLite database
-  * SQLite database configured in the default development settings
-  * Gunicorn integration for production
-  * Devserver integration for development
-  * Nosetests and coverage integration for testing
-  * Django Compressor for CSS/JS asset minification and combining
-  * Database auto-discovery via environment settings, compatible with Heroku
-
-DJ Skeletor requires Django 1.5 or later. All the other requirements are
-optional and can be disabled.
-
-
-### Quick setup
+### Quickstart
 
     # prepare the virtual environment
     mkvirtualenv --no-site-packages myenv
@@ -37,75 +17,164 @@ optional and can be disabled.
     git clone https://github.com/senko/dj-skeletor.git myproject
     cd myproject
 
-    # install requirements
-    make requirements
+    # set up the development environment
+    make dev-setup
 
-    # sanity test
+    # run your fully operational Django project
+    python manage.py runserver_plus
+
+### Batteries included
+
+The development environment by default includes:
+
+* [South](http://south.readthedocs.org/en/latest/about.html)
+  for database migrations (both development and production use it)
+* [Django Debug Toolbar](https://github.com/django-debug-toolbar/django-debug-toolbar)
+  for displaying extra information about view execution
+* SQLite database (`dev.db` in the project root directory)
+* Integrated view debugger making it easy to debug crashes directly from the
+  browser (Werkzeug and django-extension's
+  [runserver_plus](http://pythonhosted.org/django-extensions/runserver_plus.html))
+* Full SQL statement logging
+* Beefed-up Django shell with model auto-loading and
+  [IPython](http://ipython.org/) REPL
+* [Flake8](https://pypi.python.org/pypi/flake8) source code checker
+  (style, passive code analysis)
+* Console E-mail backend set by default in dev for simple E-mail send testing
+* Automated testing all set-up with
+  [nose](https://nose.readthedocs.org/en/latest/), optionally creating test
+  coverage reports, and using the in-memory SQLite database (and disabled
+  South) to speed up test execution
+* Disabled cache for easier debugging
+
+The production environment by default includes:
+
+* South for database migrations (both development and production use it)
+* [Gunicorn](http://gunicorn.org/) integration
+* [Django Compressor](http://django_compressor.readthedocs.org/en/master/)
+  for CSS/JS asset minification and compilation
+* Database auto-discovery via environment settings, compatible with Heroku
+* [Sentry](http://sentry.readthedocs.org/en/latest/) client (raven\_compat)
+  for exception logging (used only if `SENTRY_DSN` variable is set in
+  settings or environment)
+* Local-memory cache (although memcached is strongly recommended if available)
+
+### The extended tour
+
+After setting up your new Django project (see Quickstart above), try these:
+
+    # make sure all tests pass (you'll need to write them first, though :)
     make test
 
-    # rename the project directory to reflect your project name
-    # don't forget to edit Makefile to reflect the correct project name
-    # in settings
-    git mv skeletor myproject && git commit -m 'renamed project'
+    # get a test coverage report (outputs to stdout, saves HTML format in
+    # cover/index.html and produces Cobertura report compatible with Jenkins)
+    make coverage
 
-    # activate dev environment
-    echo 'from .dev import *' > myproject/settings/local.py
+    # clean up test artifacts, *.pyc files and cached compressed assets
+    make clean
 
-    # initialize the database
-    python manage.py syncdb
-    python manage.py migrate
+    # check if the code follows PEP8 and is free of obvious errors
+    # this also includes cyclomatic complexity check and will complain if your
+    # code is too complex (configurable by editing the Makefile)
+    make lint
 
-    # collect the static files needed by the apps
-    python manage.py collectstatic --noinput
+    # update the environment (eg. after pulling in new code)
+    make dev-update
 
-    # run it!
-    python manage.py runserver
+    # open up the new and improved Django shell
+    python manage.py shell_plus
 
+Yearn for more? Django-extension comes with tons of useful management commands,
+run `python manage.py help` to get an overview.
 
-### Settings
+### The production setup
 
-Settings are handled in the *settings* module:
+The production environment can't be set up automatically (at it may require
+setting up databaes details and other per-server settings manually), but there
+are some helper Makefile tasks to speed it up.
 
-  * settings.base - base/invariant project settings
-  * settings.dev - development environment
-  * settings.prod - production environment
-  * settings.test - test environment
-  * settings.local - local environment
+To set up the production environment for a DJ Skeletor-powered project, loosely
+follow this procedure:
 
-If you're storing your environment settings in the repository, the easiest
-way to activate it on the server is to symlink settings/local.py to either
-prod or dev settings module.
+    # prepare the virtual environment
+    mkvirtualenv --no-site-packages myenv
 
-If you like to keep the local settings out of the git repository, use dev.py
-or prod.py as a template and create your local.py as needed. The quick
-setup procedure and fabric setup tasks create a simple local.py that just
-imports everything from the development environment.
+    # get your project
+    git clone <myproject-url>
+    cd myproject
 
-Test settings are separate to make it easier to customize settings for use
-when running unit tests. The default test settings use in-memory SQLite
-database and turn off South migrations and Sentry logging.
+    # install the requirements
+    make reqs/prod
+
+    # create a project/settings/local.py settings file with per-server config
+    vim project/settings/local.py
+
+    # run automatic update (db sync/migrations, collectstatic)
+    make prod-update
+
+    # your production environment is now ready
+    python manage.py run_gunicorn
+
+Of course, your mileage may vary.
+
+### The settings files
+
+The settings files `base` (base settings used in all environments),
+`prod` (production settings), `dev` (local development settings) and
+`test` (settings used when running automated tests) should contain only the
+settings used by all developers/servers.
+
+Per-server (or per-developer) settings should go into `local` module
+(ie. `project/settings/local.py`). The usual pattern for this module is to
+first import everything from the settings variant that best matches your
+environment (`prod` for servers, `dev` for local development), and then
+override/add settings as needed.
+
+Example production settings just specifying the production database:
+
+    # file: project/settings/local.py
+    from .prod import *
+
+    DATABASES = {
+        'default': { ... }
+    }
+
+You shouldn't need to add `local.py` to the repository (in fact, git is
+already set up to ignore it). If some setting needs to be shared by everyone,
+it should probably be added to `base`, `dev` or `prod`.
+
+The local settings file isn't required. If it doesn't exist, the production
+setup will be used by default. This is useful if you don't have per-server
+settings or they're deployed via Unix environment (as they are on eg. Heroku
+and similar cloud hosting providers).
+
+### Heroku support
+
+The production setup uses database autodiscovery so if you have a (promoted)
+database in Heroku, it will automatically get picked up.
+
+For Heroku, you'll probably want to add the `Procfile` file with contents
+similar to this:
+
+    web: python manage.py run_gunicorn --workers=4 --bind=0.0.0.0:$PORT
+
+If your web app supports uploading of media (eg. images, videos or other
+files) by users, you'll probably need the `django-storages` app to
+automatically host them somewhere else (eg on Amazon S3). When
+`django-storages` is set up, the collecstatic management command (run as
+part of `make prod-update`) will copy the static assets to the specified
+service as well.
+
+After pushing the new code to Heroku for update, you should make sure to run
+all the needed management commands to migrate the database, etc:
+
+    heroku run make prod-update
 
 ### Django Debug Toolbar
 
 Django Debug Toolbar is set up so it's always visible in the dev
 environment, no matter what the client IP is, and always hidden in
 the production environment.
-
-### Database
-
-A simple sqlite3 database is configured in the development settings, so
-no additional configuration is needed to start hacking right away. South
-is used for schema migrations.
-
-The database filename used is `dev.db` in the project root directory. It is
-explicitly ignored by git and fabric when rsyncing the local directory to
-server.
-
-In production, database settings autodiscovery is attempted using the
-`dj_database_url` module, by looking at the `DATABASE_URL` environment setting.
-This is the standard for Heroku deployments. If the autodiscovery fails,
-the entry falls back to hardcoded values in `prod.py` or (if it exists)
-`local.py`.
 
 ### Sentry / Raven
 
@@ -124,8 +193,8 @@ If you don't want to install Sentry yourself, you can use a hosted
 version at http://getsentry.com/.
 
 When you connect to your (or hosted) Sentry server and create a new project
-there, you'll be given Sentry DSN which you need to put into settings/base.py
-to activate Sentry logging.
+there, you'll be given Sentry DSN which you need to put into production
+settings to activate Sentry exception logging.
 
 ### Compressor
 
@@ -158,20 +227,6 @@ Cobertura format in `coverage.xml` file (useful for integrating with
 Continuous Integration systems, such as Jenkins). The test run also produces
 `nosetests.xml` file in the standard JUnit format, also useful for integration
 with Jenkins or other CI systems.
-
-### Makefile
-
-A Makefile is provided with common tasks for updating requirements, running
-tests or updating the deployment.
-
-The available Makefile targets are:
-
-  * make test - run tests
-  * make coverage - run tests with coverage reports
-  * make clean - remove *.pyc files and test coverage artifacts
-  * make requirements - install/update requirements via pip
-  * make update - update requirements, clean files, run any migrations needed,
-      collect static files, and optionally compress static files
 
 #### Deployments via git
 
@@ -232,3 +287,16 @@ fabfile.py and commit the changes to your repository, or you can create
 local_fabfile.py, which will be loaded if it exists. The latter can be useful
 if you have per-team-member fabric customizations you don't want to commit
 to the repository.
+
+### Renaming the project
+
+By default, DJ Skeletor names the project *project*, so it's generic enough
+to not requiring the change for each project, so the initial setup is
+a bit faster (and the `manage.py` logic is simpler).
+
+If you do want to change the project name though, there's couple of things
+you need to do. For example, if you want to rename the project to *foo*:
+
+* rename the folder: `git mv project foo`
+* update `Makefile`, `manage.py` and˛`fabfile` to set `PROJECT_NAME` to `foo`
+* commit the changes to your git repository and you're done!

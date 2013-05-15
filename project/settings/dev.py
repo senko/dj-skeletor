@@ -18,9 +18,16 @@ CACHES = {
     }
 }
 
+# Add SQL statement logging in development
+LOGGING['loggers']['django.db'] = {
+    'handlers': ['console'],
+    'level': 'DEBUG',
+    'propagate': False
+}
+
 # set up Django Debug Toolbar if installed
 try:
-    import debug_toolbar
+    import debug_toolbar  # noqa
     MIDDLEWARE_CLASSES += (
         'debug_toolbar.middleware.DebugToolbarMiddleware',
     )
@@ -34,14 +41,10 @@ try:
 except ImportError:
     pass
 
-# set up devserver if installed
+
+# Set up django-extensions if installed
 try:
-    import devserver
-    INSTALLED_APPS += (
-        'devserver',
-    )
+    import django_extensions  # noqa
+    INSTALLED_APPS += ('django_extensions',)
 except ImportError:
     pass
-
-# Don't use Sentry logging even if configured for production
-LOGGING = BASE_LOGGING

@@ -1,0 +1,32 @@
+{% load url from future %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %}Page Title{% endblock %}</title>
+
+        <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+        <style>body { padding-top: 60px; padding-bottom: 40px; }</style>
+        <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap-responsive.min.css" %}">
+        <link rel="stylesheet" href="{% static "font-awesome/css/font-awesome.min.css" %}">
+
+        <script src="{% static "jquery/jquery-1.9.1.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+
+
+        </style>
+        {% block headjs %}{% endblock %}
+        {% block css %}{% endblock %}
+    </head>
+    <body>
+        {% block navbar %}
+            {% include "bootstrap/_navbar-fixed.html" %}
+        {% endblock %}
+        {% block messages %}
+            {% include "bootstrap/_messages.html" %}
+        {% endblock %}
+        {% block content %}{% endblock %}
+        {% block js %}{% endblock %}
+    </body>
+</html>

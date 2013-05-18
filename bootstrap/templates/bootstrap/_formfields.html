@@ -1,0 +1,22 @@
+{% load i18n %}
+{% for field in form.hidden_fields %}{{ field }}{% endfor %}
+{% for error in form.non_field_errors %}
+ <div class="alert alert-error">
+  {{ error }}
+ </div>
+{% endfor %}
+{% for field in form.visible_fields %}
+<div class="control-group {% if field.errors %}error{% endif %}">
+  <label class="control-label" for="id_{{ field.html_name }}">{{ field.label }}</label>
+  <div class="controls">
+    {{ field }}
+    <span class="help-inline">
+      {% for error in field.errors %}
+        {{ error }}
+      {% empty %}
+        {{ field.help_text }}
+      {% endfor %}
+    </span>
+  </div>
+</div>
+{% endfor %}

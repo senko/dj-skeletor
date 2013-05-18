@@ -1,0 +1,20 @@
+{% extends "bootstrap/base.html" %}
+{% load url from future %}
+
+{% block content %}
+<div class="row-fluid">
+  <div class="offset4 span4">
+    <h2>Login</h2>
+    <form class="form-horizontal" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+      {% csrf_token %}
+      {% include "bootstrap/_formfields.html" with form=form only %}
+      <div class="control-group">
+        <div class="controls">
+          <input type="submit" value="Login" class="btn btn-primary">
+          <input type="hidden" name="next" value="{{ next }}">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

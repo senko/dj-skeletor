@@ -170,3 +170,10 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_REDIRECT_URL = '/'
+
+import django.conf.global_settings
+TEMPLATE_CONTEXT_PROCESSORS = \
+    django.conf.global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+        'django.core.context_processors.request',)

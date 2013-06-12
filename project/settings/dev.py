@@ -1,29 +1,31 @@
 from .base import *
+import dj_database_url
 
-DEBUG = TEMPLATE_DEBUG = True
+DEBUG = (ENV_SETTING('DEBUG', 'true') == 'true')
+TEMPLATE_DEBUG = (ENV_SETTING('TEMPLATE_DEBUG', 'true') == 'true')
+COMPRESS_ENABLED = (ENV_SETTING('COMPRESS_ENABLED', 'true') == 'true')
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'dev.db',
-    }
-}
+DATABASES = {'default': dj_database_url.config(
+    default='sqlite://' + ROOT_DIR + '/dev.db')}
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = ENV_SETTING('EMAIL_BACKEND',
+    'django.core.mail.backends.console.EmailBackend')
 
 # Disable caching while in development
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'BACKEND': ENV_SETTING('CACHE_BACKEND',
+            'django.core.cache.backends.dummy.DummyCache')
     }
 }
 
 # Add SQL statement logging in development
-LOGGING['loggers']['django.db'] = {
-    'handlers': ['console'],
-    'level': 'DEBUG',
-    'propagate': False
-}
+if (ENV_SETTING('SQL_DEBUG', 'false') == 'true'):
+    LOGGING['loggers']['django.db'] = {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+        'propagate': False
+    }
 
 # set up Django Debug Toolbar if installed
 try:
@@ -48,3 +50,12 @@ try:
     INSTALLED_APPS += ('django_extensions',)
 except ImportError:
     pass
+
+
+# Enable django-compressor if it's installed
+if COMPRESS_ENABLED:
+    try:
+        import compressor  # noqa
+        INSTALLED_APPS += ('compressor',)
+    except ImportError:
+        pass

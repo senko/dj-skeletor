@@ -1,7 +1,8 @@
 from .base import *
 
-DEBUG = TEMPLATE_DEBUG = False
-COMPRESS_ENABLED = True
+DEBUG = (ENV_SETTING('DEBUG', 'true') == 'true')
+TEMPLATE_DEBUG = (ENV_SETTING('TEMPLATE_DEBUG', 'true') == 'true')
+COMPRESS_ENABLED = (ENV_SETTING('COMPRESS_ENABLED', 'true') == 'true')
 
 # Uncomment to precompress files during deployment (also update Makefile)
 # COMPRESS_OFFLINE = True
@@ -30,7 +31,8 @@ if not DATABASES or 'default' not in DATABASES:
 # alternative.
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': ENV_SETTING('CACHE_BACKEND',
+            'django.core.cache.backends.locmem.LocMemCache')
     }
 }
 
@@ -56,8 +58,9 @@ except ImportError:
     pass
 
 # Enable django-compressor if it's installed
-try:
-    import compressor  # noqa
-    INSTALLED_APPS += ('compressor',)
-except ImportError:
-    pass
+if COMPRESS_ENABLED:
+    try:
+        import compressor  # noqa
+        INSTALLED_APPS += ('compressor',)
+    except ImportError:
+        pass

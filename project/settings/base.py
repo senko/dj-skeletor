@@ -9,6 +9,12 @@ PROJECT_NAME = os.path.basename(ROOT_DIR)
 def ABS_PATH(*args):
     return os.path.join(ROOT_DIR, *args)
 
+
+def ENV_SETTING(key, default):
+    import os
+    return os.environ.get(key, default)
+
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )

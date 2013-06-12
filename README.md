@@ -148,6 +148,25 @@ setup will be used by default. This is useful if you don't have per-server
 settings or they're deployed via Unix environment (as they are on eg. Heroku
 and similar cloud hosting providers).
 
+### Environment settings
+
+In either production or develoment mode, settings can also be set via
+the environment variables. The following variables are supported:
+
+* `DATABASE_URL` - Heroku-compatible database URL
+* `DEBUG` - String `true` enables DEBUG, any other disables
+* `TEMPLATE_DEBUG` - String `true` enables TEMPLATE_DEBUG, any other disables
+* `COMPRESS_ENABLED` - String `true` enables django-compressor, any other
+  disables
+* `SQL_DEBUG` - String `true` enables SQL statement logging, any other
+   disables (disabled by default, available only if using `dev.py`)
+* `CACHE_BACKEND` - String value to put into `CACHES['default']['BACKEND']`
+* `EMAIL_BACKEND` - String value for EMAIL_BACKEND (only if using `dev.py`)
+
+Note that values from `local.py` override environment settings! You probably
+want to use either the local settings file or the environment settings, not
+mix them.
+
 ### Heroku support
 
 The production setup uses database autodiscovery so if you have a (promoted)

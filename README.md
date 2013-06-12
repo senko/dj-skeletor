@@ -59,6 +59,10 @@ The production environment by default includes:
   settings or environment)
 * Local-memory cache (although memcached is strongly recommended if available)
 
+Skeletor comes with a simple, optional [Vagrant](http://www.vagrantup.com/) and
+[Salt](http://saltstack.com/community.html) integration, useful in both
+development and production deployment situations.
+
 ### The extended tour
 
 After setting up your new Django project (see Quickstart above), try these:

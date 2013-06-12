@@ -307,6 +307,58 @@ local_fabfile.py, which will be loaded if it exists. The latter can be useful
 if you have per-team-member fabric customizations you don't want to commit
 to the repository.
 
+### Vagrant + Salt
+
+Skeletor comes with a simple [Vagrant](http://www.vagrantup.com/) and
+[Salt](http://saltstack.com/community.html) integration. The provided Vagrant
+file and Salt states are intended to be a starting point to modify and not
+a complete solution.
+
+In particular, the setup assumes local (masterless) salt use case.
+
+*NOTE: Support for Vagrant and Salt in DJ Skeletor is highly experimental.
+You will probably encounter problems. All feedback is welcome.*
+
+#### Using Vagrant for development
+
+The provided Vagrantfile configures a virtual machine with the default
+`precise32` (32bit Ubuntu 12.04) virtual machine and then uses the saltstates
+to configure the machine.
+
+First, make sure you have Vagrant installed, and that you have *vagrant-salt*
+plugin installed (verify via `vagrant plugin list`).
+
+Next, edit the `salt/pillars/cfg.sls` file and inspect and (if needed) adjust
+the configuration. The configuration should be good for using Vagrant for
+development (in particular, the app root directory is set to the location
+where vagrant will mount your project's root directory on the host), but
+you may want to change some of the defaults.
+
+Then, run `vagrant up` and wait until your new virtual machine is
+provisioned. After this, you can use `vagrant ssh` to ssh into the new
+virtual machine. The virtualenv should be loaded automatically and you will
+be placed in the app root directory.
+
+Running `python manage.py runserver` should bring up the Django development
+server and visiting port 8000 on your host machine should connect to it.
+
+Note that Vagrant maps port 8000 on your host to port 80 in the VM. Nginx
+in the VM will reverse-proxy traffic to port 80 to port 8000 in the virtual
+machine. If your development server is not running, you'll get the fammiliar
+nginx *502 Bad Gateway* error.
+
+#### Using Salt for production
+
+After installing an empty server (Ubuntu is assumed as the provided salt
+states make use of upstart), copy the `salt/` subdirectory to `/srv/salt`
+on the server. Then, [bootstrap Salt on the server](https://github.com/saltstack/salt-bootstrap).
+Next this, copy the `/srv/salt/minion` file to `/etc/salt/minion` to override
+the defaults.
+
+After this, running `sudo salt-call state.highstate` should completely provision
+the server, including pulling the application code from a git repository
+and setting it up for production.
+
 ### Renaming the project
 
 By default, DJ Skeletor names the project *project*, so it's generic enough

@@ -8,3 +8,4 @@
 /cover/
 /coverage.xml
 /nosetests.xml
+/.vagrant/

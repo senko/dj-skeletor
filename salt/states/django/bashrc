@@ -1,0 +1,12 @@
+export PS1='\u@\h:\w\$ '
+eval "$(dircolors -b)"
+alias ls='ls --color=auto'
+
+test -d {{ pillar['virtualenv-home'] }} && . {{ pillar['virtualenv-home'] }}/bin/activate
+
+export DATABASE_URL=postgres://{{ pillar['postgresql-dbuser'] }}:{{ pillar['postgresql-dbpass'] }}@{{ pillar['postgresql-dbhost'] }}/{{ pillar['postgresql-dbname'] }}
+export DEBUG=True
+export TEMPLATE_DEBUG=True
+export SQL_DEBUG=True
+
+cd {{ pillar['app-root'] }}

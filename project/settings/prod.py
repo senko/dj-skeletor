@@ -62,5 +62,6 @@ if COMPRESS_ENABLED:
     try:
         import compressor  # noqa
         INSTALLED_APPS += ('compressor',)
+        STATICFILES_FINDERS += ('compressor.finders.CompressorFinder',)
     except ImportError:
         pass

@@ -6,7 +6,7 @@ TEMPLATE_DEBUG = (ENV_SETTING('TEMPLATE_DEBUG', 'true') == 'true')
 COMPRESS_ENABLED = (ENV_SETTING('COMPRESS_ENABLED', 'true') == 'true')
 
 DATABASES = {'default': dj_database_url.config(
-    default='sqlite://' + ROOT_DIR + '/dev.db')}
+    default='sqlite:////' + ROOT_DIR + '/dev.db')}
 
 EMAIL_BACKEND = ENV_SETTING('EMAIL_BACKEND',
     'django.core.mail.backends.console.EmailBackend')

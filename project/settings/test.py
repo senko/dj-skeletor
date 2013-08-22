@@ -35,3 +35,8 @@ try:
         NOSE_ARGS = ['--cover-package=' + ','.join(PROJECT_APPS)]
 except ImportError:
     pass
+
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+)

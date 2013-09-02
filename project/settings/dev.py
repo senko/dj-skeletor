@@ -60,3 +60,5 @@ if COMPRESS_ENABLED:
         STATICFILES_FINDERS += ('compressor.finders.CompressorFinder',)
     except ImportError:
         pass
+
+LOGIN_REDIRECT_URL = '/login_check/'

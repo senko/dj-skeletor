@@ -9,7 +9,7 @@ from django.core.mail import EmailMultiAlternatives
 def random_generate( size = 26, chars = string.ascii_uppercase + string.digits ):
     return ''.join( random.choice( chars ) for x in range( size ) )
 
-def send_email(subject, template, to, variables = {}):
+def send_email(subject, template, to, variables={}, attachment=None):
 
     if not type(to) == list:
         to = [to]
@@ -24,4 +24,11 @@ def send_email(subject, template, to, variables = {}):
         "Project <%s>" % (settings.DEFAULT_FROM_EMAIL),
         to)
     msg.attach_alternative(htmlContent, "text/html")
+
+    if attachment:
+        msg.attach(
+            attachment['file_name'],
+            attachment['file_location'],
+            attachment['file_type'])
+
     msg.send()

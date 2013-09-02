@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'south',
+    'djcelery',
     # Apps
     'apps.users'
 )
@@ -178,3 +179,6 @@ LOGGING = {
 }
 
 AUTH_USER_MODEL = "users.User"
+
+import djcelery
+djcelery.setup_loader()

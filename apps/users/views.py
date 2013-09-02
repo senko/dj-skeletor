@@ -10,7 +10,7 @@ from django.contrib.sites.models import get_current_site
 from django.contrib.auth.decorators import login_required
 from .forms import UserCreationForm
 from .models import User
-from project.utilities import send_email
+import tasks
 
 def _registration_email_send(request, user):
     data = {
@@ -18,7 +18,7 @@ def _registration_email_send(request, user):
         'SERVERIP' : get_current_site(request).domain
     }
     
-    send_email(
+    tasks.send_email.delay(
         _('Activation Email'),
         'registration/email.html',
         user.email,

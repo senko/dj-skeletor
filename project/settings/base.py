@@ -140,6 +140,7 @@ INSTALLED_APPS = (
     # OAUTH 2
     'provider',
     'provider.oauth2',
+    'rest_framework',
     # Apps
     'apps.users'
 )

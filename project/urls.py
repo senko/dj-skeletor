@@ -42,4 +42,7 @@ urlpatterns = patterns('',
     url(r'^accounts/change_password_done/$',
         'django.contrib.auth.views.password_change_done',
         name='password_change_done'),
+
+    # OAuth 2
+    url(r'^oauth2/', include('provider.oauth2.urls', namespace = 'oauth2')),
 )

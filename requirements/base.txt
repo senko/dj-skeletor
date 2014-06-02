@@ -4,3 +4,4 @@ South==0.7.6
 dj-database-url==0.2.1
 celery==3.0.21
 django-celery==3.0.21
+django-oauth2-provider==0.2.6.1

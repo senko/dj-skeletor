@@ -137,6 +137,9 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'south',
     'djcelery',
+    # OAUTH 2
+    'provider',
+    'provider.oauth2',
     # Apps
     'apps.users'
 )

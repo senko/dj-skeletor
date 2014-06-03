@@ -1,5 +1,5 @@
 -r test.txt
-django-debug-toolbar==0.9.4
+django-debug-toolbar==1.2.1
 django-extensions==1.1.1
 Werkzeug==0.8.3
 flake8==2.0

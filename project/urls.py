@@ -24,15 +24,17 @@ urlpatterns = patterns('',
         'django.contrib.auth.views.password_reset',
         name='password_reset_request'
     ),
-    (r'^accounts/password_reset/done/$',
-        'django.contrib.auth.views.password_reset_done'
+    url(r'^accounts/password_reset/done/$',
+        'django.contrib.auth.views.password_reset_done',
+        name='password_reset_done'
     ),
-    url(r'^accounts/reset/(?P<uidb36>[-\w]+)/(?P<token>[-\w]+)/$',
+    url(r'^accounts/reset/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',
         'django.contrib.auth.views.password_reset_confirm',
-        name='password_reset_form'
+        name='password_reset_confirm'
     ),
-    (r'^accounts/reset/done/$',
-        'django.contrib.auth.views.password_reset_complete'
+    url(r'^accounts/reset/done/$',
+        'django.contrib.auth.views.password_reset_complete',
+        name='password_reset_complete'
     ),
 
     #Change Password

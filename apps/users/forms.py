@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext, ugettext_lazy as _
-from django.contrib.auth.hashers import UNUSABLE_PASSWORD, identify_hasher
+from django.contrib.auth.hashers import is_password_usable, identify_hasher
 from django.utils.html import format_html, format_html_join
 from django.forms.util import flatatt
 from django.template import loader
@@ -12,7 +12,7 @@ class ReadOnlyPasswordHashWidget(forms.Widget):
         encoded = value
         final_attrs = self.build_attrs(attrs)
 
-        if not encoded or encoded == UNUSABLE_PASSWORD:
+        if not encoded or is_password_usable(encoded):
             summary = mark_safe("<strong>%s</strong>" % ugettext("No password set."))
         else:
             try:

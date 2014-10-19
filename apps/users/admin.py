@@ -74,7 +74,7 @@ class UserAdmin(admin.ModelAdmin):
             return False
         return super(UserAdmin, self).lookup_allowed(lookup, value)
 
-    @sensitive_post_parameters()
+    @method_decorator(sensitive_post_parameters())
     @csrf_protect_m
     @transaction.commit_on_success
     def add_view(self, request, form_url='', extra_context=None):
@@ -105,7 +105,7 @@ class UserAdmin(admin.ModelAdmin):
         return super(UserAdmin, self).add_view(request, form_url,
                                                extra_context)
 
-    @sensitive_post_parameters()
+    @method_decorator(sensitive_post_parameters())
     def user_change_password(self, request, id, form_url=''):
         if not self.has_change_permission(request):
             raise PermissionDenied

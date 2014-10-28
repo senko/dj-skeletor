@@ -1,7 +1,7 @@
 from .base import *
 
-DEBUG = (ENV_SETTING('DEBUG', 'true') == 'true')
-TEMPLATE_DEBUG = (ENV_SETTING('TEMPLATE_DEBUG', 'true') == 'true')
+DEBUG = (ENV_SETTING('DEBUG', 'false') == 'true')
+TEMPLATE_DEBUG = (ENV_SETTING('TEMPLATE_DEBUG', 'false') == 'true')
 COMPRESS_ENABLED = (ENV_SETTING('COMPRESS_ENABLED', 'true') == 'true')
 
 # Uncomment to precompress files during deployment (also update Makefile)

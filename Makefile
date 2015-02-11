@@ -43,7 +43,7 @@ dev-setup: ensure_virtualenv reqs/dev
 	if [ ! -f $(PROJECT_NAME)/settings/local.py ]; then \
 		echo 'from .dev import *' > $(PROJECT_NAME)/settings/local.py; \
 	fi
-	$(MANAGE) syncdb --all
+	$(MANAGE) syncdb
 	$(MANAGE) migrate --fake
 
 test-setup: ensure_virtualenv reqs/test

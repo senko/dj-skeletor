@@ -186,3 +186,6 @@ AUTH_USER_MODEL = "users.User"
 
 import djcelery
 djcelery.setup_loader()
+
+# For Django >= 1.6 test runner setting
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'

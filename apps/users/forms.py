@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.auth.hashers import is_password_usable, identify_hasher
 from django.utils.html import format_html, format_html_join
-from django.forms.util import flatatt
+from django.forms.utils import flatatt
 from django.template import loader
 from .models import User
 from project.utilities import random_generate

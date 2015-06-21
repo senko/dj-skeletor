@@ -1,7 +1,7 @@
-Django==1.7.4
-Fabric==1.10.1
+Django==1.8.2
+Fabric==1.10.2
 dj-database-url==0.3.0
-celery==3.1.17
+celery==3.1.18
 django-celery==3.1.16
 django-oauth2-provider==0.2.6.1
-djangorestframework==3.0.5
+djangorestframework==3.1.3

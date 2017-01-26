@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response
@@ -11,17 +10,19 @@ from .forms import UserCreationForm
 from .models import User
 import tasks
 
+
 def _registration_email_send(request, user):
     data = {
-        'ACTIVATECODE' : user.verify_code,
-        'SERVERIP' : request.get_host().domain
+        'ACTIVATECODE': user.verify_code,
+        'SERVERIP': request.get_host().domain
     }
-    
+
     tasks.send_email.delay(
         _('Activation Email'),
         'registration/email.html',
         user.email,
         data)
+
 
 def register(request):
 
@@ -32,16 +33,17 @@ def register(request):
         _registration_email_send(request, user)
 
         user.backend = 'django.contrib.auth.backends.ModelBackend'
-        login(request, user);
+        login(request, user)
 
-        variables = RequestContext( request, {'user': form.instance})
+        variables = RequestContext(request, {'user': form.instance})
         return render_to_response(
             'registration/register_success.html',
             variables
         )
-    variables = RequestContext( request, {'form': form} )
+    variables = RequestContext(request, {'form': form})
 
-    return render_to_response( 'registration/register.html', variables )
+    return render_to_response('registration/register.html', variables)
+
 
 def register_verify(request, verify_code):
 
@@ -55,9 +57,9 @@ def register_verify(request, verify_code):
         user.save()
 
         user.backend = 'django.contrib.auth.backends.ModelBackend'
-        login(request, user);
+        login(request, user)
 
-        variables = RequestContext( request, {
+        variables = RequestContext(request, {
             'user': user,
         })
         return render_to_response(
@@ -65,9 +67,10 @@ def register_verify(request, verify_code):
             variables
         )
 
+
 @login_required
 def login_check(request):
-        variables = RequestContext( request, {
+        variables = RequestContext(request, {
             'user': request.user,
         })
         return render_to_response(

@@ -1,9 +1,7 @@
-from django.db import transaction
 from django.conf import settings
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.forms import (AdminPasswordChangeForm)
-from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, Http404
@@ -19,7 +17,9 @@ from .forms import UserCreationForm, UserChangeForm
 
 csrf_protect_m = method_decorator(csrf_protect)
 
+
 class UserAdmin(admin.ModelAdmin):
+
     add_form_template = 'admin/auth/user/add_form.html'
     change_user_password_template = None
     fieldsets = (
@@ -32,8 +32,8 @@ class UserAdmin(admin.ModelAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2')}
-        ),
+            'fields': ('username', 'password1', 'password2')
+        }),
     )
     form = UserChangeForm
     add_form = UserCreationForm
@@ -65,7 +65,7 @@ class UserAdmin(admin.ModelAdmin):
     def get_urls(self):
         return [
             url(r'^(\d+)/password/$',
-             self.admin_site.admin_view(self.user_change_password))
+                self.admin_site.admin_view(self.user_change_password))
         ] + super(UserAdmin, self).get_urls()
 
     def lookup_allowed(self, lookup, value):
@@ -138,7 +138,8 @@ class UserAdmin(admin.ModelAdmin):
             'save_as': False,
             'show_save': True,
         }
-        return TemplateResponse(request,
+        return TemplateResponse(
+            request,
             self.change_user_password_template or
             'admin/auth/user/change_password.html',
             context, current_app=self.admin_site.name)

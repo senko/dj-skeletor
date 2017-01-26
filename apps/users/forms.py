@@ -1,13 +1,14 @@
 from django import forms
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.auth.hashers import is_password_usable, identify_hasher
-from django.utils.html import format_html, format_html_join
+from django.utils.html import format_html, format_html_join, mark_safe
 from django.forms.utils import flatatt
-from django.template import loader
 from .models import User
 from project.utilities import random_generate
 
+
 class ReadOnlyPasswordHashWidget(forms.Widget):
+
     def render(self, name, value, attrs):
         encoded = value
         final_attrs = self.build_attrs(attrs)
@@ -31,6 +32,7 @@ class ReadOnlyPasswordHashWidget(forms.Widget):
 
 
 class ReadOnlyPasswordHashField(forms.Field):
+
     widget = ReadOnlyPasswordHashWidget
 
     def __init__(self, *args, **kwargs):
@@ -42,7 +44,9 @@ class ReadOnlyPasswordHashField(forms.Field):
         # render an input field.
         return initial
 
+
 class UserCreationForm(forms.ModelForm):
+
     """
     A form that creates a user, with no privileges, from the given username and
     password.
@@ -51,11 +55,14 @@ class UserCreationForm(forms.ModelForm):
         'duplicate_username': _("A user with that username already exists."),
         'password_mismatch': _("The two password fields didn't match."),
     }
-    username = forms.EmailField(label=_("Username"), max_length=30,
+    username = forms.EmailField(
+        label=_("Username"), max_length=30,
         help_text=_("Required. 30 characters or fewer.")),
-    password1 = forms.CharField(label=_("Password"),
+    password1 = forms.CharField(
+        label=_("Password"),
         widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_("Password confirmation"),
+    password2 = forms.CharField(
+        label=_("Password confirmation"),
         widget=forms.PasswordInput,
         help_text=_("Enter the same password as above, for verification."))
 
@@ -73,7 +80,6 @@ class UserCreationForm(forms.ModelForm):
             return username
         raise forms.ValidationError(self.error_messages['duplicate_username'])
 
-
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
@@ -86,12 +92,14 @@ class UserCreationForm(forms.ModelForm):
 class UserChangeForm(forms.ModelForm):
     username = forms.RegexField(
         label=_("Username"), max_length=30, regex=r"^[\w.@+-]+$",
-        help_text=_("Required. 30 characters or fewer. Letters, digits and "
-                      "@/./+/-/_ only."),
+        help_text=_(
+            "Required. 30 characters or fewer. Letters, digits and "
+            "@/./+/-/_ only."),
         error_messages={
             'invalid': _("This value may contain only letters, numbers and "
                          "@/./+/-/_ characters.")})
-    password = ReadOnlyPasswordHashField(label=_("Password"),
+    password = ReadOnlyPasswordHashField(
+        label=_("Password"),
         help_text=_("Raw passwords are not stored, so there is no way to see "
                     "this user's password, but you can change the password "
                     "using <a href=\"password/\">this form</a>."))

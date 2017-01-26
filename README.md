@@ -1,4 +1,5 @@
 # DJ Skeletor
+[![Build Status](https://travis-ci.org/narsic/dj-skeletor.svg?branch=master)](https://travis-ci.org/narsic/dj-skeletor)
 
 DJ Skeletor is a skeleton Django project handy for quick bootstrapping of new
 empty Django projects. It will help you get up and running with your project

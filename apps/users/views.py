@@ -6,7 +6,6 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth import login
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.sites.models import get_current_site
 from django.contrib.auth.decorators import login_required
 from .forms import UserCreationForm
 from .models import User
@@ -15,7 +14,7 @@ import tasks
 def _registration_email_send(request, user):
     data = {
         'ACTIVATECODE' : user.verify_code,
-        'SERVERIP' : get_current_site(request).domain
+        'SERVERIP' : request.get_host().domain
     }
     
     tasks.send_email.delay(

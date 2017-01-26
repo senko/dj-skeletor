@@ -136,9 +136,6 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'djcelery',
-    # OAUTH 2
-    'provider',
-    'provider.oauth2',
     'rest_framework',
     # Apps
     'apps.users'

@@ -8,3 +8,7 @@
 /cover/
 /coverage.xml
 /nosetests.xml
+dev.db
+celery
+*.swp
+*.swo

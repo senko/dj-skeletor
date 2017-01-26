@@ -1,9 +1,10 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Examples:
     # url(r'^$', 'myapp.views.home', name='home'),
     # url(r'^myapp/', include('myapp.urls')),
@@ -15,36 +16,33 @@ urlpatterns = patterns('',
     url(r'^', include('apps.users.urls')),
 
     #Log IN & OUT
-    url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
-    url(r'^login/$', 'django.contrib.auth.views.login', name="login"),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', name="logout"),
+    url(r'^accounts/login/$', auth_views.login),
+    url(r'^login/$', auth_views.login, name="login"),
+    url(r'^logout/$', auth_views.logout, name="logout"),
 
     # Password reset
     url(r'^accounts/password_reset/$',
-        'django.contrib.auth.views.password_reset',
+        auth_views.password_reset,
         name='password_reset_request'
     ),
     url(r'^accounts/password_reset/done/$',
-        'django.contrib.auth.views.password_reset_done',
+        auth_views.password_reset_done,
         name='password_reset_done'
     ),
     url(r'^accounts/reset/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',
-        'django.contrib.auth.views.password_reset_confirm',
+        auth_views.password_reset_confirm,
         name='password_reset_confirm'
     ),
     url(r'^accounts/reset/done/$',
-        'django.contrib.auth.views.password_reset_complete',
+        auth_views.password_reset_complete,
         name='password_reset_complete'
     ),
 
     #Change Password
     url(r'^accounts/change_password/$',
-        'django.contrib.auth.views.password_change',
+        auth_views.password_change,
         name='password_change'),
     url(r'^accounts/change_password_done/$',
-        'django.contrib.auth.views.password_change_done',
+        auth_views.password_change_done,
         name='password_change_done'),
-
-    # OAuth 2
-    url(r'^oauth2/', include('provider.oauth2.urls', namespace = 'oauth2')),
-)
+]

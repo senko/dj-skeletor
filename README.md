@@ -1,5 +1,7 @@
 # DJ Skeletor
 [![Build Status](https://travis-ci.org/narsic/dj-skeletor.svg?branch=master)](https://travis-ci.org/narsic/dj-skeletor)
+[![pypi-version]][pypi]
+[![Dependency Status](https://www.versioneye.com/user/projects/588b3b42c64626004feb3193/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/588b3b42c64626004feb3193)
 
 DJ Skeletor is a skeleton Django project handy for quick bootstrapping of new
 empty Django projects. It will help you get up and running with your project

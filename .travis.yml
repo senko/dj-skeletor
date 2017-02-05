@@ -1,0 +1,10 @@
+language: python
+python:
+      - "2.7"
+install:
+      - pip install pep8 --use-mirrors
+      - pip install https://github.com/dcramer/pyflakes/tarball/master
+      - pip install -r requirements/base.txt
+script:
+      - "pep8 --exclude=migrations --ignore=E501,E225 apps"
+      - pyflakes -x W apps

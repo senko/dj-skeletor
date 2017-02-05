@@ -45,6 +45,7 @@ dev-setup: ensure_virtualenv reqs/dev
 	fi
 	$(MANAGE) migrate
 	$(MANAGE) migrate --fake
+	$(MANAGE) loaddata initial
 
 test-setup: ensure_virtualenv reqs/test
 

@@ -25,6 +25,10 @@ of useful Django application and setup for development, production and
     # run your fully operational Django project
     python manage.py runserver_plus
 
+    # Default user pass for admin
+    user: admin
+    pass: admin
+
 ### Batteries included
 
 The development environment by default includes:

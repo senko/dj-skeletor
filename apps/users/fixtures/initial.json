@@ -1,0 +1,22 @@
+[
+{
+  "model": "users.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$30000$kPkjA4gthTsy$llYtRsRGhSSaK0v9o2+sca7yuxLarFxMCRe5AnaUbnw=",
+    "last_login": "2017-02-03T10:24:10.996Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@adsmin.admin",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2017-01-27T21:42:12.214Z",
+    "verify_code": null,
+    "email_verified": false,
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]

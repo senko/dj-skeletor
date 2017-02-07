@@ -4,3 +4,4 @@ django-extensions==1.7.6
 Werkzeug==0.11.15
 flake8==3.2.1
 ipython==5.1.0
+redis==2.10.5

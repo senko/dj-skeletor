@@ -29,6 +29,13 @@ of useful Django application and setup for development, production and
     user: admin
     pass: admin
 
+    # Run Celery
+    ## to run celery and worker in development environment you need to install and start redis too
+    - redis-server
+    - python manage.py celeryd
+    - python manage.py celerybeat
+    
+
 ### Batteries included
 
 The development environment by default includes:

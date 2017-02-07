@@ -37,8 +37,7 @@ try:
         'debug_toolbar',
     )
     DEBUG_TOOLBAR_CONFIG = {
-        'INTERCEPT_REDIRECTS': False,
-        'SHOW_TOOLBAR_CALLBACK': lambda *args, **kwargs: True
+        'SHOW_TOOLBAR_CALLBACK': 'debug_toolbar.middleware.show_toolbar',
     }
 except ImportError:
     pass
@@ -60,3 +59,9 @@ if COMPRESS_ENABLED:
         STATICFILES_FINDERS += ('compressor.finders.CompressorFinder',)
     except ImportError:
         pass
+
+LOGIN_REDIRECT_URL = '/login_check/'
+
+# CELERY Backend set to redis for dedvelopment environment
+BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
